@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore | AYAH</title>
+    <link rel="stylesheet" href="../css/explore.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="../app.js"></script>
+</head>
+<body>
+    <nav class="global-nav">
+        <div class="logo"><a href="../index.html">AYAH</a></div>
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="discover.html">Discover</a>
+            <a href="explore.html" class="active">Explore</a>
+        </div>
+    </nav>
+
+    <main class="explore-container">
+        <!-SURAH HEADER BANNER->
+        <header class="surah-overview gsap-slide-down">
+            <div class="surah-metadata">
+                <h1 id="explore-surah-arabic" class="arabic-title"></h1>
+                <h2 id="explore-surah-english" class="english-title"></h2>
+                <p id="explore-surah-translation" class="surah-meaning"></p>
+            </div>
+            <a href="discover.html" class="primary-btn">Back to Discovery</a>
+        </header>
+
+        <!-CONTEXTUAL VERSES LIST->
+        <section class="context-reading-area">
+            <div id="explore-loading" class="hidden">Loading chapter context...</div>
+
+            <ul id="context-list" class="verse-list">
+                <!-JS INJECTS ELEMENTS HERE. THE RESPECTIVE DISCOVERED VERSE WILL BE DSIPLAYED AS A HIGLIGHTED CLASS->   
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
