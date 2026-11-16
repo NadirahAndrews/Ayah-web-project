@@ -1,0 +1,47 @@
+/* FONTS, COLOURS AND LAYOUT */
+
+/*headings*/
+@font-face {
+    font-family: "Italiana";
+    src: url("../assets/fonts/italiana.ttf") format("truetype");
+    font-display: swap;
+}
+
+/*body*/
+@font-face {
+    font-family: "DM Sans";
+    src: url("../assets/fonts/dm-sans.ttf") format("truetype");
+    font-display: swap;
+}
+
+/*arabic text*/
+@font-face {
+    font-family: "Amiri";
+    src: url("../assets/fonts/amiri.ttf") format("truetype");
+    font-display: swap;
+}
+
+/*colour pallete and design values*/
+:root {
+    --cream: #f2efe2;
+    --emerald-green: #2d3536;
+    --moss-green: #697c70;
+    --pastel-green: #98aa9d;
+    --lime-green: #c9cfc2;
+
+    --serif: "Italiana", Georgia, serif;
+    --sans: "DM Sans", Arial, sans-serif;
+    --read-scale: 1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--emerald-green);
+    font-family: var(--sans);
+    line-height: 1.65;
+}
