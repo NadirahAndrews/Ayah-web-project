@@ -3,40 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Quran chapters and read the verse aroudn your discovery">
     <title>Explore | AYAH</title>
     <link rel="stylesheet" href="../css/explore.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="../app.js"></script>
 </head>
-<body>
-    <nav class="global-nav">
-        <div class="logo"><a href="../index.html">AYAH</a></div>
-        <div class="nav-links">
-            <a href="../index.html">Home</a>
-            <a href="discover.html">Discover</a>
-            <a href="explore.html" class="active">Explore</a>
-        </div>
-    </nav>
+<body data-page="explore">
+    <!--SKIP TO MAIN CONTENT-->
+    <a class="skip-link" href="#main">Skip to Main Content</a>
 
-    <main class="explore-container">
-        <!-SURAH HEADER BANNER->
-        <header class="surah-overview gsap-slide-down">
-            <div class="surah-metadata">
-                <h1 id="explore-surah-arabic" class="arabic-title"></h1>
-                <h2 id="explore-surah-english" class="english-title"></h2>
-                <p id="explore-surah-translation" class="surah-meaning"></p>
-            </div>
-            <a href="discover.html" class="primary-btn">Back to Discovery</a>
+    <header class="site-header">
+        <a class="wordmark" href="../index.html" aria-label="AYAH Home"> AYAH <span aria-hidden="true">|</span> Explore the Quran</a>
+
+        <!--NAVIGATION-->
+        <nav aria label="Main navigation">
+            <a href="../index.html">Home</a>
+            <a href="pages/discover.html">Discover</a>
+            <a href="pages/explore.html" aria-current="page">Explore</a>
+        </nav>
+
+        <p class="header-note">A moment for meaning</p>
+    </header>
+
+    <main id="main" class="page-main">
+
+        <!-PAGE INTRODUCTION->
+
+        <header class="page-intro">
+            <p class="eyebrow">02 / SEE THE BIGGER PICTURE</p>
+
+            <h1>A verse. <em>Its chapter.</em></h1>
+
+            <p>
+                Keep reading. Open your understanding with the surrounding passage.
+            </p>
         </header>
 
-        <!-CONTEXTUAL VERSES LIST->
-        <section class="context-reading-area">
-            <div id="explore-loading" class="hidden">Loading chapter context...</div>
+        <div class="explore-layout">
 
-            <ul id="context-list" class="verse-list">
-                <!-JS INJECTS ELEMENTS HERE. THE RESPECTIVE DISCOVERED VERSE WILL BE DSIPLAYED AS A HIGLIGHTED CLASS->   
-            </ul>
-        </section>
+            <!-CHAPTER SIDEBAR->
+
+            <aside class="chapter-browser" aria-labelledby="browser-title">
+                <h2 id="browser-title">Find a chapter</h2>
+
+                <label for="chapter-search">
+                    Search by name or number
+                </label>
+
+                <!-SEARCH ONLY ACTIVE AFTER CHAPTER DATA IS CONNECTED->
+                <input id="chapter-search" type="search" placeholder="e.g. Al-Fatiha" auto-complete="off" disabled>
+
+                <p id="chapter-status" role="status">
+                    No chapters loaded.
+                </p>
+
+                <button id="retry-chapters" class="button-secondary" type="button" hidden>
+                    Reload chapters
+                </button>
+
+                <!-CHAPTERS->
+                <div id="chapter-list" class="chpater-list" aria-label="Chapters"></div>
+            </aside>
+
+            <div class="chapter-content">
+                <!-READING CONTROLS->
+                <div class="chapter-toolbar">
+                    <a id="back-discovery" class="text-link" href="discover.html">
+                        Back to discovery
+                    </a>
+
+                    <div class="text-controls" aria-label="Reading text size">
+                        <button id="text-smaller" type="button" aria-label="Decrease reading text size" disabled>
+                            A-
+                        </button>
+
+                        <button id="text-larger" type="button" aria-label="Increase reading text size" disabled>
+                            A+
+                        </button>
+                    </div>
+                </div>
+
+                <!-CHAPTER READING SECTION->
+
+                <section id="reading-region" class="reading-region" aria-label="Chapter reading" aria-busy="false">
+                    <div class="api-state" id="api-state" data-state="empty" role="status" aria-live="polite">
+                        <span class="state-symbol" aria-hidden="true">|</span>
+
+                        <h2 id="state-title">See the bigger picture.</h2>
+                        <p id="state-message">No chapter loaded</p>
+
+                        <button class="button secondary" id="retry" type="button" hidden>
+                            Try again
+                        </button>
+                    </div>
+
+                    <div id="chapter-result" hidden>
+                        <header class="chapter-banner">
+                            <div>
+                                <p class="eyebrow" id="chapter-meta"></p>
+                                <h2 id="chapter-title"></h2>
+                                <p id="chapter-meaning"></p>
+                            </div>
+
+                            <p class="arabic" id="chapter-arabic" lang="ar" dir="rtl"></p>
+                        </header>
+
+                        <div class="chapter-reading-tools">
+                            <p id="reading-range" role="status"></p>
+
+                            <form id="jump-form">
+                                <label for="jump-verse">Go to verse</label>
+
+                                <input type="number" id="jump-verse" min="1" value="1" required disabled>
+
+                                <button type="submit" aria-label="Go to verse" disabled>
+                                    ->
+                                </button>
+                            </form>
+                        </div>
+
+                        <p class="translation-credit">
+                            English-translation - Saheeh International
+                        </p>
+
+                        <!-VERSE LIST ITEMS->
+                        <ol id="verse-list" class="verse-list"></ol>
+
+                        <div class="chapter-pagination">
+                            <button class="button-secondary" id="previous-verses" type="button" disabled>
+                                Previous
+                            </button>
+
+                            <button class="button secondary" id="next verses" type="button" disabled>
+                                Next Verses
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <p class="context-note">
+                    Reading context is a means of refering to verses around your discovery. It is not <i>Tafsir</i> (scholarly explanation). For deeper study, consult a learned scholarly source.
+                </p>
+
+            </div>
+        </div>
     </main>
+
+    <!-FOOTER->
+
+    <footer class="site-footer">
+        <a class="wordmark" href="index.html">AYAH</a>
+
+        <p>A littel curiosity. A deeper connection.</p>
+        <a href="https://alquran.cloud/" target="_blank" rel="noopener noreferrer">
+         Al Quran Cloud
+        </a>
+    </footer>
 </body>
 </html>

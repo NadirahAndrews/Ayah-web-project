@@ -3,53 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover randomised Quran verses, read theur translations and explore its chapter.">
     <title>Discover | AYAH</title>
     <link rel="stylesheet" href="../css/discover.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="../app.js"></script>
 </head>
-<body>
-    <nav class="global-nav">
-        <div class="logo"><a href="../index.html">AYAH</a></div>
-        <div class="nav-links">
+<body data-page="discover">
+    <!--SKIP TO MAIN CONTENT-->
+    <a class="skip-link" href="#main">Skip to Main Content</a>
+
+    <header class="site-header">
+        <a class="wordmark" href="../index.html" aria-label="AYAH Home"> AYAH <span aria-hidden="true">|</span> Discover the Quran</a>
+
+        <!--NAVIGATION-->
+        <nav aria label="Main navigation">
             <a href="../index.html">Home</a>
-            <a href="discover.html" class="active">Discover</a>
-            <a href="explore.html">Explore</a>
+            <a href="pages/discover.html" aria-current="page">Discover</a>
+            <a href="pages/explore.html">Explore</a>
+        </nav>
+
+        <p class="header-note">A moment for meaning</p>
+    </header>
+
+    <main id="main" class="page-main">
+        <!-PAGE INTRODUCTION->
+
+        <header class="page-intro">
+            <p class="eyebrow">01 / YOUR TIME TO DISCOVER</p>
+
+            <h1>A verse to <em>begin with.</em></h1>
+
+            <p>Pause. Read. See where your curiosity takes you.</p>
+        </header>
+
+        <!-READING LAYOUT->
+
+        <!-TO BE COMPLETED!!! placeholder for media->
+        <div class="reading layout">
+            <aside class="reading-aside" aria-labelledby="guide-title">
+                <img class="aside-image" src="aside-image" width="1024" height="1536" alt="aside-image" loading="lazy">
+            
+            
+                <p class="eyebrow">A SMALL GUIDE</p>
+                <h2 id="guide-title">Take your time.</h2>
+
+                <p>
+                Read the verse, explore the translation or simply listen.
+                </p>
+            </aside>
+
+            <section class="reading card" id="reading-region" aria-label="Discovered verse" aria-busy="false">
+
+                <!-EMPTY STATE->
+                <div class="api-state" id="api-state" data-state="empty" role="status" aria-live="polite">
+
+                    <span class="state-symbol" aria-hidden="true">|</span>
+
+                    <h2 id="state-title">A moment for meaning.</h2>
+                    <p id="state-message">No verse loaded</p>
+
+                    <!-REQUEST FAIL->
+                    <button class="button secondary" id="retry" type="button" hidden>
+                        Try again
+                    </button>
+                </div>
+
+                <!-VERSE CONTAINERS->
+                <article id="verse-result" hidden>
+                    <header class="verse-topline">
+                        <p class="eyebrow" id="verse-ref"></p>
+                        <h2 id="verse-surah"></h2>
+                    </header>
+
+                    <p class="arabic verse-arabic" id="verse-arabic" lang="ar" dir="rtl"></p>
+
+                    <p class="eyebrow">ENGLISH TRANSALTION</p>
+                    <p class="translation" id="verse-translation"></p>
+
+                    <div class="verse-actions">
+                         <button class="button secondary" id="listen" type="button" disabled>
+                             Listen
+                        </button>
+
+                        <a class="text-link" id="explore-link" href="explore.html">
+                            Read this chapter
+                        </a>
+                    </div>
+
+                    <div id="audio area" hidden>
+                        <audio id="recitation" controls preload="none" aria-label="Verse recitation"></audio>
+                    </div>
+
+                    <p id="audio-message" role="status"></p>
+                </article>
+            </section>
         </div>
-    </nav>
 
-    <main class="discovery-container">
+        <!-NEXT VERSE->
 
-        <!-LOADING STATE->
-        <div id="api-loading" class="state-container">
-            <div class="spinner"></div>
-            <p>Retrieving a verse...</p>
+        <div class="discovery-bottom">
+            <p>There is always more to discover.</p>
+
+            <!-connect API->
+            <button class="button" id="next-verse" type="button" disabled>
+                Discover another ayah
+            </button>
         </div>
 
-        <!-SUCCESS STATE (HIDDEN BY DEFAULT UNTIL API RESPONDS)->
-        <div id="api-success" class="state-container hidden">
-            <div class="verse-reference">
-                <span id="surah-name-en"></span> | Verse <span id="ayah-number"></span>            
-            </div>
+        <details class="reading-note">
+            <summary>About the text and translation</summary>
 
-            <div class="verse-content">
-                <p id="arabic-text" class="arabic-typography" dir="rtl"></p>
-                <p id="english-translation" class="english-typography"></p>
-            </div>
+            <p>
+                Arabic: Uthmani edition. English: Saheeh International. This website retrieves text and recitation from Al Quran Cloud.
+            </p>
 
-            <div class="action-bar">
-                <button id="btn-listen" class="secondary-btn" disabled>Listen</button>
-                <button id="btn-next-ayah" class="primary-btn">Discover Another</button>
-                <a href="explore.html" id="link-explore" class="text-link">Explore Context</a>
-            </div>
-
-            <!-ERROR STATE (HIDDEN BY DEFAULT UNTIL API RESPONDS)->
-            <div id="api-error" class="state-container hidden">
-                <p>Oops! Something went wrong while fetching the verse.</p>
-                <button id="btn-retry" class="secondary-btn">Try Again</button>
-            </div>
-
-        </div>
+            <p>
+                Translation convey and interpretation of meaning. Surrounding verse offer reading context, not scholarly commentary.
+            </p>
+        </details>
     </main>
+
+    <!-FOOTER->
+
+    <footer class="site-footer">
+        <a class="wordmark" href="index.html">AYAH</a>
+
+        <p>A littel curiosity. A deeper connection.</p>
+        <a href="https://alquran.cloud/" target="_blank" rel="noopener noreferrer">
+         Al Quran Cloud
+        </a>
+    </footer>
+  
 </body>
 </html>

@@ -3,70 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AYAH is a platform that allows users to discover the Quran one ayah at a time, providing insights and explanations and context for each verse.">
     <title>AYAH | Discover the Quran</title>
     <link rel="stylesheet" href="css/home.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="app.js"></script>
 </head>
-<body>
-    <nav class="global-nav">
-        <div class="logo">AYAH</div>
-        
-        <div class="nav-links">
-            <a href="index.html">Home</a>
+<body data-page="home">
+    <!--SKIP TO MAIN CONTENT-->
+    <a class="skip-link" href="#main">Skip to Main Content</a>
+
+    <header class="site-header">
+        <a class="wordmark" href="index.html" aria-label="AYAH Home"> AYAH <span aria-hidden="true">|</span> Discover the Quran</a>
+
+        <!--NAVIGATION-->
+        <nav aria-label="Main Navigation">
+            <a href="index.html" aria-current="page">Home</a>
             <a href="pages/discover.html">Discover</a>
             <a href="pages/explore.html">Explore</a>
-        </div>
-    </nav>
+        </nav>
+
+        <p class="header-note">A moment for meaning</p>
+    </header>
+
     
-    <main>
-        
-        <div id="smooth-content">
+    <main id="main">
 
-            <!-SECTION ONE: HERO AND INTRODUCTION>
-            <section class="scroll-page hero-section">
-                
-                <div class="large-typography">
-                    <h1 class="gsap-reveal-text">Discover the Quran</h1>
-                    <h1 class="gsap-reveal-text">,one ayah at a time</h1>
+            <!-SECTION ONE: OPENING HERO SECTION->
+            <section class="hero" aria-labelledby="hero-title">
+                <div class="hero-copy">
+                    <p class="eyebrow">A SPACE TO DISCOVER</p>
+
+                    <h1 id="hero-title">
+                        Discover the Quran,<br><em>one Ayah at a time.</em><br>
+                    </h1>
+
+                    <p class="body-copy">
+                        Begin with a single verse.<br>Make room for a littleunderstanding.
+                    </p>
+
+                    <a class="scroll-link" href="#understanding">
+                        Scroll to discover <span aria-hidden="true">↓</span>
+                    </a>
                 </div>
 
-                <div class="scroll-prompt gsap-fade-in">
-                    <p>Lets begin your journey</p>
-                    <div class="scroll-line"></div>
-                </div>
-
+                <!-TO BE COMPLETED!!!! placeholder for media->
+                <figure class="hero-art">
+                    <img src="images/hero-art.jpg" alt="Hero image" width="1024" height="1536" fetchpriority="high">
+                    <figcaption>
+                        A new perspective begins here.
+                    </figcaption>
+                </figure>
             </section>
 
-            <!-SECTION TWO: QURANIC TERMINOLOGY GUIDE>
-            <section class="scroll-page terminology-section">
 
-                <div class="term-card" id="term-ayah">
-                    <h2 class="large-typograpgy gsap-slide-up">What is an Ayah?</h2>
-                    <p class="gsap-fade-in">An <i>Ayah</i> is a single verse within the Quran.</p>
-                </div> 
-                
-                <div class="term-card" id="term-surah">
-                    <h2 class="large-typograpgy gsap-slide-up">What is a Surah?</h2>
-                    <p class="gsap-fade-in">A <i>Surah</i> is a chapter within the Quran, consisting of multiple Ayahs.</p>
+            <!-SECTION TWO: WEBSITE INTRODUCTION->
+            <section class="intro-section" id="understanding" aria-labelledby="understanding-title">
+                <p class="eyebrow">01 / BEFORE YOU BEGIN</p>
+
+                <div>
+                    <h2 id="understanding-title">
+                        Every journey begins<br> with <em>understanding.</em>
+                    </h2>
+
+                    <p class="body-copy">
+                        You don't need to know where to start. AYAH offers a steady path to understanding the Quran: one verse, its translation, and the space to explore a little further.
+                    </p>
                 </div>
-
             </section>
 
-            <!-SECTION THREE: CALL TO ACTION>
-            <section class="scroll-page journey-section">
+            <!-SECTION THREE: TERMINOLOGY GUIDE->
+            <section class="terminology" aria-labelledby="terms-title">
+                <header class="section-heading">
+                    <p class="eyebrow">A LITTLE GUIDE GOES A LONG WAY</p>
+                    <h2 id="terms-title">Some terms to help you along the way.</h2>
+                    <p>Three ideas to take with you.</p>
+                </header>
 
-                <div class="journey-content">
-                    <h1 class="large-typography gsap-reveal-text">Ready to Discover more?</h1>
-                    <a href="pages/discover.html" class="primary-btn gsap-fade-in">Begin your Journey</a>
-                </div>
+                <!-TERMINOLOGY CARD 1->
+                <article class="term-panel term-ayah">
+                    <p class="term-arabic" lang="ar" dir="rtl">آية</p>
 
+                    <div>
+                        <p class="eyebrow">01 / A VERSE</p>
+                        <h3>Ayah</h3>
+                        <p class="pronounciation">/ aa-yah /</p>
+
+                        <p>
+                            An ayah is a verse of the Quran. the word also means "sign". A single ayah is a small starting point for a bigger exploration.
+                        </p>
+                    </div>
+                </article>
+
+                <!-TERMINOLOGY CARD 2->
+                <article class="term-panel term-surah">
+                    <p class="term-arabic" lang="ar" dir="rtl">سورة</p>
+
+                    <div>
+                        <p class="eyebrow">02 / A CHAPTER</p>
+                        <h3>Surah</h3>
+                        <p class="pronounciation">/ soo-rah /</p>
+
+                        <p>
+                            A surah is a chapter of the Quran. There are 114 surahs, each made up of ayahs. Reading the surrounding verses helps you see and understand the passage more fully.
+                        </p>
+                    </div>
+                </article>
+
+                <!-TERMINOLOGY CARD 3->
+                <article class="term-panel term-translation">
+                    <p class="temr-arabic" lang="ar" dir="rtl">معنى</p>
+
+                    <div>
+                        <p class="eyebrow">03 / A WAY TO UNDERSTAND</p>
+                        <h3>Translation</h3>
+                        <p class="pronounciation">/ meaning in another language</p>
+
+                        <p>
+                            An English translation helps you approach the meaning of the Arabic text. It is a translator's rendering, and does not replace the original or a detailed commentary.
+                        </p>
+                    </div>
+                </article>
             </section>
-        
-        </div>
 
+            <!-DISCOVERY JOURNEY INVITE->
+
+            <section class="journey-section" aria-labelledby="journey-title">
+                <p class="eyebrow">02 / FOLLOW YOUR CURIOSITY</p>
+
+                <h2 id="journey title">One verse.<br><em>A start.</em>
+                </h2>
+
+                <p>
+                    Read at your own pace. Listen to the recitation.<br>Follow a verse into its chapter.
+                </p>
+
+                <a class="button button-light" href="pages/discover.html">
+                    Lets begin! <span aria-hidden="true"></span>
+                </a>
+            </section>
     </main>
+
+    <!-FOOTER->
+
+    <footer class="site-footer">
+        <a class="wordmark" href="index.html">AYAH</a>
+
+        <p>A littel curiosity. A deeper connection.</p>
+        <a href="https://alquran.cloud/" target="_blank" rel="noopener noreferrer">
+         Al Quran Cloud
+        </a>
+    </footer>
 
     
 </body>
