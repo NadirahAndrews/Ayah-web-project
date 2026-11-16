@@ -53,3 +53,150 @@ img {
     max-width: 100%;
     height: auto;
 }
+
+a {
+    color: inherit;
+    text-underline-offset: 5px;
+}
+
+h1, h2, h3 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight:400;
+    line-height: 1.15;
+}
+
+h1 {
+    font-size: clamp(44px,6vw,86px);
+}
+
+h2 {
+    font-size: clamp(34px,4vw,60px);
+}
+
+h3 {
+    font-size: clamp(32px,4vw,52px);
+}
+
+em {
+    color: var(--moss-green)
+}
+
+/*KEYBOARD NAVIGATION*/
+
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid #375b72;
+    outline-offset: 5px;
+}
+
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 20px;
+    padding: 12px;
+    background: var(--emerald-green);
+    color:var(--cream);
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 10px;
+}
+
+/*SHARED HEADER*/
+
+.site-header {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 5%;
+    border-bottom: 1px solid var(--lime-green);
+}
+
+.wordmark {
+    font-family: var(--serif);
+    font-size: 28px;
+    letter-spacing: 3px;
+    text-decoration:none;
+}
+
+.site-header nav {
+    display:flex;
+    flex-wrap:wrap;
+    gap: 24px;
+}
+
+.site.header nav a[aria-current="page"] {
+    text-decoration:underline;
+}
+
+.header-note {
+    font-size: 12px;
+    color: var(--moss-green);
+}
+
+/*HERO-LAYOUT*/
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    align-items: center;
+    gap: 60px;
+    max-width: 1440px;
+    margin: auto;
+    padding: 64px 5%;
+}
+
+.eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.body-copy {
+    max-width: 480px;
+    margin: 24 px 0;
+}
+
+.hero-art {
+    width: 100%;
+    max-width: 360px;
+    margin: 0;
+    justify-self:center;
+}
+
+.hero-art img {
+    width: 100%;
+    border-radius: 45% 45% 0 0;
+}
+
+.hero-art figcaption {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--moss-green)
+}
+
+.button {
+    display:inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    min-height: 48px;
+    padding: 14px 22px;
+    border: 1px solid var(--emerald-green);
+    background: var(--emerald-green);
+    color: var(--cream);
+    text-decoration: none;
+}
+
+.scroll-link {
+    display: block;
+    width: fit-content;
+    margin-top: 24px;
+    font-size: 13px;
+}
+
+/* TERMINOLOGY SECTION*/
