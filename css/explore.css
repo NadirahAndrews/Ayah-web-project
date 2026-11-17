@@ -60,7 +60,7 @@ button, input {
 }
 
 button:disabled, input:disabled {
-    opacity: 0,5;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
@@ -127,7 +127,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     gap: 24px;
 }
 
-.site.header nav a[aria-current="page"] {
+.site-header nav a[aria-current="page"] {
     text-decoration:underline;
 }
 
@@ -226,7 +226,7 @@ input {
 
 /*READING AREA (EMPTY)*/
 
-.reading-region {
+.reading-region, #reading-region {
     min-height: 340px;
     border-top: 1px solid var(--lime-green);
 }
@@ -361,7 +361,7 @@ input {
     }
 
     .chapter-browser {
-        padding: 20 px;
+        padding: 20px;
         border: 1px solid var(--lime-green);
     }
 
