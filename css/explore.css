@@ -105,36 +105,29 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     top: 10px;
 }
 
-/*SHARED HEADER*/
-
 .site-header {
-    display: flex;
+    display:flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
     padding: 24px 5%;
-    border-bottom: 1px solid var(--lime-green)
-} 
+    border-bottom: 1px solid var(--lime-green);
+}
 
 .wordmark {
     font-family: var(--serif);
     font-size: 28px;
     letter-spacing: 3px;
-    text-decoration: none;
+    text-decoration:none;
 }
 
 .site-header nav {
     display:flex;
-    flex-wrap: wrap;
+    flex-wrap:wrap;
     gap: 24px;
 }
 
-.site-header nav a {
-    font-size: 14px;
-    text-decoration: none;
-}
-
-.site-header nav a[aria-current="page"] {
+.site.header nav a[aria-current="page"] {
     text-decoration:underline;
 }
 
