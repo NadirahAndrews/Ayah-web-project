@@ -43,3 +43,41 @@ body {
     font-family: var(--sans);
     line-height: 1.65;
 }
+
+[hidden] {
+    display: none !important;
+}
+
+a {
+    color: inherit;
+    text-underline-offset: 5px;
+}
+
+button {
+    font:inherit;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+h1, h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: clamp(38px,5vw,64px);
+}
+
+h2 {
+    font-size:30px;
+}
+
+em {
+    color: var(--moss-green)
+}
+
