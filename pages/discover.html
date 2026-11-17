@@ -16,7 +16,7 @@
         <a class="wordmark" href="../index.html" aria-label="AYAH Home"> AYAH <span aria-hidden="true">|</span> Discover the Quran</a>
 
         <!--NAVIGATION-->
-        <nav aria label="Main navigation">
+        <nav aria-label="Main navigation">
             <a href="../index.html">Home</a>
             <a href="discover.html" aria-current="page">Discover</a>
             <a href="explore.html">Explore</a>
@@ -26,7 +26,7 @@
     </header>
 
     <main id="main" class="page-main">
-        <!-PAGE INTRODUCTION->
+        <!--PAGE INTRODUCTION-->
 
         <header class="page-intro">
             <p class="eyebrow">01 / YOUR TIME TO DISCOVER</p>
@@ -36,10 +36,10 @@
             <p>Pause. Read. See where your curiosity takes you.</p>
         </header>
 
-        <!-READING LAYOUT->
+        <!--READING LAYOUT-->
 
-        <!-TO BE COMPLETED!!! placeholder for media->
-        <div class="reading layout">
+        <!--TO BE COMPLETED!!! placeholder for media-->
+        <div class="reading-layout">
             <aside class="reading-aside" aria-labelledby="guide-title">
                 <img class="aside-image" src="aside-image" width="1024" height="1536" alt="aside-image" loading="lazy">
             
@@ -52,9 +52,9 @@
                 </p>
             </aside>
 
-            <section class="reading card" id="reading-region" aria-label="Discovered verse" aria-busy="false">
+            <section class="reading-card" id="reading-region" aria-label="Discovered verse" aria-busy="false">
 
-                <!-EMPTY STATE->
+                <!--EMPTY STATE-->
                 <div class="api-state" id="api-state" data-state="empty" role="status" aria-live="polite">
 
                     <span class="state-symbol" aria-hidden="true">|</span>
@@ -62,13 +62,13 @@
                     <h2 id="state-title">A moment for meaning.</h2>
                     <p id="state-message">No verse loaded</p>
 
-                    <!-REQUEST FAIL->
+                    <!--REQUEST FAIL-->
                     <button class="button secondary" id="retry" type="button" hidden>
                         Try again
                     </button>
                 </div>
 
-                <!-VERSE CONTAINERS->
+                <!--VERSE CONTAINERS-->
                 <article id="verse-result" hidden>
                     <header class="verse-topline">
                         <p class="eyebrow" id="verse-ref"></p>
@@ -99,12 +99,12 @@
             </section>
         </div>
 
-        <!-NEXT VERSE->
+        <!--NEXT VERSE-->
 
         <div class="discovery-bottom">
             <p>There is always more to discover.</p>
 
-            <!-connect API->
+            <!--connect API-->
             <button class="button" id="next-verse" type="button" disabled>
                 Discover another ayah
             </button>
@@ -123,7 +123,7 @@
         </details>
     </main>
 
-    <!-FOOTER->
+    <!--FOOTER-->
 
     <footer class="site-footer">
         <a class="wordmark" href="../index.html">AYAH</a>
