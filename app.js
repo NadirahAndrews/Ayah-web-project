@@ -11,6 +11,20 @@
     const params = new URLSearchParams(window.location.search);
     const API = "https://api.alquran.cloud/v1"; //read chapter or verse numbers fromt he page URL
     const cache = new Map();
+
+    //Quran chapters range from 1-114. An invalid value results in the fallback.
+
+    class EmptyResult extends Error {}
+
+    function validNumber(value, maximum, fallback) {
+        const number =Number(value);
+
+        return Number.isInteger(number) &&
+        number >= 1 &&
+        number <= maximum 
+        ? number 
+        :fallback;
+    }
 }
 )
 
