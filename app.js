@@ -12,7 +12,7 @@
     const API = "https://api.alquran.cloud/v1"; //read chapter or verse numbers fromt he page URL
     const cache = new Map();
 
-    //Quran chapters range from 1-114. An invalid value results in the fallback.
+    //Quran chapters range from 1-114. An invalid value results in the supplied fallback.
 
     class EmptyResult extends Error {}
 
