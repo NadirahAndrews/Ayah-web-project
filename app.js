@@ -9,7 +9,7 @@
     
     const $ = (id) => document.getElementById(id);
     const params = new URLSearchParams(window.location.search);
-    const API = "https://api.alquran.cloud/v1"; //read chapter or verse numbers fromt he page URL
+    const API = "https://api.alquran.cloud/v1"; //read chapter or verse numbers fromt the page URL
     const cache = new Map();
 
     //Quran chapters range from 1-114. An invalid value results in the supplied fallback.
@@ -64,6 +64,31 @@
         } finally {
             clearTimeout(timer);
         }
+    }
+
+    //Retrieving Arabic and English texts from the API
+
+    async function editions(path) {
+        const data = await request(
+            path + "/editions/quran-uthmani,en.sahih"
+        );
+
+        if (!Array.isArray(data)) {
+            throw new Error("Invalid response");
+        }
+
+        const arabic = data.find((item) =>
+            item.edition?.identifier === "quran-uthmani"
+        );
+
+        const english = data.find((item) =>
+            item.edition?.identifier === "en.sahih"
+        );
+
+        if (!arabic || !english) {
+            throw new Error("Missing edition");
+        }
+         return { arabic, english};
     }
 }
 )
