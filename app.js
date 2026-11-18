@@ -157,13 +157,14 @@
             $("state-title").textContent = messages[kind][0];
             $("state-message"). textContent = messages[kind][1];
         }
-
-        function showError(error) {
-            showState(
-                error instanceof EmptyResult ? "empty" : "error"
-            );
-        }
     }
+
+    function showError(error) {
+        showState(
+            error instanceof EmptyResult ? "empty" : "error"
+        );
+    }
+    
 
     //Page refresh opens the same verse/chapter
 
@@ -180,8 +181,6 @@
             //Reading still works if URL updates are blocked
         }
     }
-}
-)
 
 /*DISCOVER PAGE*/
 
@@ -260,7 +259,7 @@ function startDiscover() {
             current = verse;
 
             $("verse-ref").textContent =
-            "SURAH" + arabic.surah.number + " / VERSE" + verse.local;
+            "SURAH " + arabic.surah.number + " / VERSE" + verse.local;
 
             $("verse-surah").textContent =
             arabic.surah.englishName;
@@ -272,7 +271,7 @@ function startDiscover() {
             verse.english;
 
             $("explore-link").href =
-            "explore.html?surah=" + arabic.surah.number + "&ayah" + verse.local;
+            "explore.html?surah=" + arabic.surah.number + "&ayah=" + verse.local;
 
             updateURL({ ayah: number });
 
@@ -353,7 +352,7 @@ function startDiscover() {
                 cache.clear();
 
                 $("audio-message").textContent =
-                "Audio could not start. Try Listen again" + "or use the audio controls.";
+                "Audio could not start. Try Listen again or use the audio controls.";
             }
         } finally {
             if (version === audioVersion) {
@@ -420,11 +419,11 @@ function startExplore() {
 
     const pageSize = 10;
 
-    //ignore punctuation, spaces and capitalisation
+    //ignore punctuation, spaces and capitalisation when searching
 
     function normalise(value) {
         return String(value)
-        .toLowerCase
+        .toLowerCase()
         .replace(/[^\p{L}\p{N}]/gu, "");
     }
 
@@ -459,7 +458,7 @@ function startExplore() {
         $("chapter-list").replaceChildren();
 
         $("chapter-status").textContent = matches.length 
-        ? matches.length + "chapters found"
+        ? matches.length + " chapters found."
         : "No matching chapters, try another name or number.";
 
         matches.forEach((item) => {
@@ -697,7 +696,7 @@ function startExplore() {
             chapter.name;
 
             $("chapter-meta").textContent =
-            "SURAH" + chapter.number +
+            "SURAH " + chapter.number +
             " / " + verses.length + "VERSES";
 
             $("jump-verse").max = verses.length;
@@ -732,7 +731,7 @@ function startExplore() {
 
         element.scrollIntoView({
             block: "start",
-            behaviour: "instant"
+            behavior: "instant"
         });
     }
 
@@ -764,7 +763,7 @@ function startExplore() {
         );
 
         renderVerses();
-        focusReading($("verses-list"));
+        focusReading($("verse-list"));
     });
 
     //Show the next group of verses
@@ -838,7 +837,7 @@ function startExplore() {
             scale
         );
 
-        $("test-smaller").disabled =
+        $("text-smaller").disabled =
         scale <= 0.9;
 
         $("text-larger").disabled =
@@ -857,4 +856,18 @@ function startExplore() {
     loadChapters();
     loadChapter();
 }
+
+/* START CORRECT PAGE */
+
+if (page === "discover") {
+    startDiscover();
+}
+
+if (page === "explore") {
+    startExplore();
+}
+
+})();
+
+
     
