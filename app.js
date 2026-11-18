@@ -164,6 +164,22 @@
             );
         }
     }
+
+    //Page refresh opens the same verse/chapter
+
+    function updateURL(values) {
+        const url = new URL(window.location.href);
+
+        Object.entries(values).forEach(([key, value]) => {
+            url.searchParams.set(key, value);
+        });
+
+        try {
+            history.replaceState(null, "", url);
+        } catch {
+            //Reading still works if URL updates are blocked
+        }
+    }
 }
 )
 
