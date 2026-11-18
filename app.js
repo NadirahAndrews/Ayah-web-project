@@ -116,7 +116,54 @@
         };
     }
 
-    
+    //Loading, errors and success results
+
+    function showState(kind) {
+        const success = kind === "success";
+
+        $("api-sate").hidden = success;
+        $("api-sate").dataset.state = kind;
+
+        const resultID = page === "discover"
+        ? "verse-result"
+        : "chapter-result";
+
+        $(resultID).hidden = !success;
+
+        $("reading-region").setAttribute(
+            "aria-busy",
+            String(kind === "loading")
+        );
+
+        $("retry").hidden =
+        success || kind === "loading";
+
+        const messages = {
+            loading: [
+                "Loading your reading.",
+                "Retrieving Arabic and English text."
+            ],
+            empty: [
+                "No test was returned.",
+                "Please try again"
+            ],
+            error: [
+                "The text could not load.",
+                "Check your connection, then try again."
+            ]
+        };
+
+        if (!success) {
+            $("state-title").textContent = messages[kind][0];
+            $("state-message"). textContent = messages[kind][1];
+        }
+
+        function showError(error) {
+            showState(
+                error instanceof EmptyResult ? "empty" : "error"
+            );
+        }
+    }
 }
 )
 
