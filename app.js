@@ -534,82 +534,193 @@ function startExplore() {
 
             $("retry-chapters").hidden = false;
         }
+    }
+        
 
-        //Verse list
-        function renderVerses() {
-            $("verse-list").replaceChildren();
-            $("verse-list").start = offset + 1;
+    //Verse list
+    function renderVerses() {
+        $("verse-list").replaceChildren();
+        $("verse-list").start = offset + 1;
 
-            const visibleVerses = chapter.verses.slice(
-                offset,
-                offset + pageSize
+        const visibleVerses = chapter.verses.slice(
+            offset,
+            offset + pageSize
+        );
+
+        visibleVerses.forEach((verse) => {
+            const item = document.createElement("li");
+
+            item.className = "chapter-verse";
+            item.id = "verse-" + verse.local;
+
+            if (verse.local === selected) {
+                item.classList.add("selected");
+            }
+
+            const header = document.createElement("div");
+            header.className = "chapter-verse-header";
+
+            const reference = document.createElement("span");
+
+            reference.textContent =
+            chapter.number + ":" + verse.local;
+
+            const link = document.createElement("a");
+
+            link.href =
+            "discover.html?ayah=" + verse.number;
+
+            link.textContent = "Read and listen";
+
+            link.setAttribute(
+                "aria-label",
+                "Read and listen to verse " + 
+                reference.textContent
             );
 
-            visibleVerses.forEach((verse) => {
-                const item = document.createElement("li");
+            header.append(reference, link);
 
-                item.className = "chapter-verse";
-                item.id = "verse-" + verse.local;
+            const arabic = document.createElement("p");
 
-                if (verse.local === selected) {
-                    item.classList.add("selected");
-                }
+            arabic.className = "arabic";
+            arabic.lang = "ar";
+            arabic.dir = "rtl";
+            arabic.textContent = verse.arabic;
 
-                const header = document.createElement("div");
-                header.className = "chapter-verse-header";
+            const translation = document.createElement("p");
 
-                const reference = document.createElement("span");
+            translation.className = "translation";
+            translation.textContent = verse.english;
 
-                reference.textContent =
-                chapter.number + ":" + verse.local;
+            item.append(header, arabic, translation);
 
-                const link = document.createElement("a");
+            $("verse-list").append(item);
+        });
 
-                link.href =
-                "discover.html?ayah=" + verse.number;
+        $("reading-range").textContent =
+        "Verses " + (offset + 1) + "-" +
+        Math.min(
+            offset + pageSize,
+            chapter.verses.length
+        ) +
+        " of " + chapter.verses.length;
 
-                link.textContent = "Read and listen";
-
-                link.setAttribute(
-                    "aria-label",
-                    "Read and listen to verse " + 
-                    reference.textContent
-                );
-
-                header.append(reference, link);
-
-                const arabic = document.createElement("p");
-
-                arabic.className = "arabic";
-                arabic.lang = "ar";
-                arabic.dir = "rtl";
-                arabic.textContent = verse.arabic;
-
-                const translation = document.createElement("p");
-
-                translation.className = "translation";
-                translation.textContent = verse.english;
-
-                item.append(header, arabic, translation);
-
-                $("verse-list").append(item);
-            });
-
-            $("reading-range").textContent =
-            "Verses " + (offset + 1) + "-" +
-            Math.min(
-                offset + pageSize,
-                chapter.verses.length
-            ) +
-            " of " + chapter.verses.length;
-
-            $("previous-verses").disabled =
+        $("previous-verses").disabled =
             offset === 0;
 
-            $("next-verses").disabled =
+        $("next-verses").disabled =
             offset + pageSize >= chapter.verses.length;
-        }
+    }
 
-        
+    async function loadChapter() {
+        const version = ++requestVersion;
+        const number = chosen;
+
+        chapter = null;
+
+        showState("loading");
+
+        try {
+            const { arabic, english } = await editions(
+                "/surah/" + number
+            );
+
+            if (version !== requestVersion) return;
+
+            if (
+                arabic.number !== number ||
+                english.number !== number ||
+                !Array.isArray(arabic.ayahs) ||
+                !Array.isArray(english.ayahs)
+            ) {
+                throw new Error ("Invalid chapter");
+            }
+
+            if (
+                !arabic.ayahs.length ||
+                !english.ayahs.length
+            ) {
+                throw new EmptyResult("No verses");
+            }
+
+            if (
+                arabic.ayahs.length !== english.ayahs.length ||
+                arabic.ayahs.length !== arabic.numberOfAyahs ||
+                !arabic.name ||
+                !arabic.englishName
+            ) {
+                throw new Error("Incomplete chapter");
+            }
+
+            const translations = new Map(
+                english.ayahs.map((verse) => [
+                    verse.number,
+                    verse
+                ])
+            );
+
+            const verses = arabic.ayahs.map((verse) =>
+                matchVerse(
+                    verse,
+                    translations.get(verse.number)
+                )
+            );
+
+            if (
+                verses.some((verse, index) =>
+                    verse.local !== index + 1
+                )
+            ) {
+                throw new Error("incorrect verse order");
+            }
+
+            chapter = { ...arabic, verses };
+
+            selected = validNumber(
+                selected, 
+                verses.length,
+                1
+            );
+
+            offset =
+            Math.floor(
+                (selected - 1) / pageSize
+            ) * pageSize;
+
+            $("chapter-title").textContent =
+            chapter.englishName;
+
+            $("chapter-meaning").textContent =
+            chapter.englishNameTranslation;
+
+            $("chapter-arabic").textContent =
+            chapter.name;
+
+            $("chapter-meta").textContent =
+            "SURAH" + chapter.number +
+            " / " + verses.length + "VERSES";
+
+            $("jump-verse").max = verses.length;
+            $("jump-verse").value = selected;
+
+            $("back-discovery").href =
+            "discover.html?ayah=" +
+            verses[selected - 1].number;
+
+            updateURL({
+                surah: number,
+                ayah: selected
+            });
+
+            renderVerses();
+            showState("success");
+        } catch (error) {
+            if (version === requestVersion) {
+                cache.clear();
+                showError(error);
+            }
+        }
     }
 }
+    
+    
