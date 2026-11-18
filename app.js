@@ -721,6 +721,66 @@ function startExplore() {
             }
         }
     }
+
+    //Moving keyboard focus and veiwport to the new reading
+    function focusReading(element) {
+        element.tabIndex = -1;
+
+        element.focus({
+            preventScroll: true
+        });
+
+        element.scrollIntoView({
+            block: "start",
+            behaviour: "instant"
+        });
+    }
+
+    //Filtering the sidebar as users type
+    $("chapter-search").addEventListener(
+        "input",
+        renderChapters
+    );
+
+    //Retry loading the sidebar
+    $("retry-chapters").addEventListener(
+        "click",
+        loadChapters
+    );
+
+    //Retry loading the selected chapter
+    $("retry").addEventListener(
+        "click",
+        loadChapter
+    );
+
+    //Show the previous group of verses
+    $("previous-verses").addEventListener("click", () => {
+        if (!chapter) return;
+
+        offset = Math.max(
+            0,
+            offset - pageSize
+        );
+
+        renderVerses();
+        focusReading($("verses-list"));
+    });
+
+    //Show the next group of verses
+    $("next-verses").addEventListener("click", () => {
+        if (
+            !chapter ||
+            offset + pageSize >= chapter.verses.length
+        ) {
+            return;
+        }
+
+        offset += pageSize;
+
+        renderVerses();
+        focusReading($("verse-list"));
+    });
 }
     
     
