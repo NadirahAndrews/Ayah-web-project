@@ -159,6 +159,10 @@
             $("state-title").textContent = messages[kind][0];
             $("state-message"). textContent = messages[kind][1];
         }
+
+        if (success) {
+            animateReading($(resultID));
+        }
     }
 
     function showError(error) {
@@ -275,6 +279,29 @@ function animateReading(element) {
             clearProps: "opacity, transform"
         }
     );
+}
+
+// Initialising animation features
+
+function startMotion() {
+    //allow reading to still work if GSAP doesnt load
+    if (!window.gsap) return;
+
+    if (window.ScrollTrigger) {
+        window.gsap.registerPlugin(
+            window.ScrollTrigger
+        );
+    }
+
+    animateEntrance();
+    animateSections();
+
+    //Recalculate scroll positions after the fonts load.
+    if (document.fonts && window.ScrollTrigger) {
+        document.fonts.ready.then(() =>{
+            window.ScrollTrigger.refresh();
+        });
+    }
 }
 /*DISCOVER PAGE*/
 
@@ -703,6 +730,10 @@ function startExplore() {
 
         $("next-verses").disabled =
             offset + pageSize >= chapter.verses.length;
+        
+        if (!$("chapter-result").hidden) {
+            animateReading($("verse-list"));
+        }    
     }
 
     async function loadChapter() {
