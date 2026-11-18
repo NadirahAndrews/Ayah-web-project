@@ -183,6 +183,32 @@
             //Reading still works if URL updates are blocked
         }
     }
+/*GSAP MOTION */    
+
+//Page animations: introductory element sequence
+function animateEntrance() {
+    const elements = document.querySelectorAll(
+        "[data-intro]"
+    );
+
+    if (!elements.length) return;
+
+    window.gsap.fromTo(
+        elements,
+        {
+            opacity: 0,
+            y: 18
+        },
+        {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: "power2.out",
+            clearProps: "opacity, transform"
+        }
+    );
+}
 
 /*DISCOVER PAGE*/
 
@@ -870,6 +896,7 @@ if (page === "explore") {
 }
 
 })();
+
 
 
     
