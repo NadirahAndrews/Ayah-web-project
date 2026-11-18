@@ -781,6 +781,44 @@ function startExplore() {
         renderVerses();
         focusReading($("verse-list"));
     });
+
+    //connecting "go to verse"
+
+    $("jump-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        if (
+            !chapter ||
+            !$("jump-form").reportValidity()
+        ) {
+            return;
+        }
+
+        selected = validNumber(
+            $("jump-verse").value,
+            chapter.verses.length,
+            1
+        );
+
+        offset =
+        Math.floor(
+            (selected -1) / pageSize
+        ) * pageSize;
+
+        updateURL({
+            surah: chapter.number,
+            ayah: selected
+        });
+
+        $("back-discovery").href =
+        "discover.html?ayah=" +
+        chapter.verses[selected -1].number;
+
+        renderVerses();
+
+        focusReading(
+            $("verse-" + selected)
+        );
+    });
 }
-    
     
