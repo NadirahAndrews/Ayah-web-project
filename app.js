@@ -494,4 +494,45 @@ function startExplore() {
 
         markChapter();
     }
+
+    async function loadChapters() {
+        $("chapter-search").disabled = true;
+        $("retry-chapters").hidden = true;
+
+        $("chapter-status").textContent = 
+        "Loading chapters.";
+
+        try {
+            const data = await request("/surah");
+
+            if (!Array.isArray(data) || !data.length) {
+                throw new EmptyResult("No chapters");
+            }
+
+            if (
+                data.length !== 114 ||
+                data.some ((item, index) =>
+                    item.number !== index + 1 ||
+                !item.name ||
+                !item.englishName ||
+                !item.englishNameTranslation
+                )
+            ) {
+                throw new Error("Invalid chapter list");
+            }
+
+            chapters = data;
+
+            $("chapter-search").disabled = false;
+
+            renderChapters();
+        } catch {
+            cache.clear();
+
+            $("chapter-status").textContent =
+            "The chapter list could not load.";
+
+            $("retry-chapters").hidden = false;
+        }
+    }
 }
