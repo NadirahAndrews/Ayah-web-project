@@ -249,6 +249,33 @@ function animateSections() {
         });
     });
 }
+
+//Animate reading content display
+
+function animateReading(element) {
+    if (!element || !window.gsap) {
+        return;
+    }
+
+    //Halt a prev animation if user moves too quickly
+
+    window.gsap.killTweensOf(element);
+
+    window.gsap.fromTo(
+        element,
+        {
+            opacity: 0.35,
+            y: 8
+        },
+        {
+            opacity: 1,
+            y: 0,
+            duration: 0.35,
+            ease: "power2.out",
+            clearProps: "opacity, transform"
+        }
+    );
+}
 /*DISCOVER PAGE*/
 
 //Audio player preparation
