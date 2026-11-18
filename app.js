@@ -5,7 +5,9 @@
 (() => {
     const page= document.body.dataset.page;
     
-    if (page !== "discover" && page !== "explore") return;
+    if (page !== "home" && page !== "discover" && page !== "explore") { 
+        return;
+    }
     
     const $ = (id) => document.getElementById(id);
     const params = new URLSearchParams(window.location.search);
