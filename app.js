@@ -820,5 +820,41 @@ function startExplore() {
             $("verse-" + selected)
         );
     });
+
+    //Text sizing
+    function changeSize(amount) {
+        scale = Math.max(
+            0.9,
+            Math.min(
+                1.4,
+                Math.round(
+                    (scale + amount) * 10
+                ) / 10
+            )
+        );
+
+        document.documentElement.style.setProperty(
+            "--read-scale",
+            scale
+        );
+
+        $("test-smaller").disabled =
+        scale <= 0.9;
+
+        $("text-larger").disabled =
+        scale >= 1.4;
+    }
+
+    $("text-smaller").addEventListener("click", () => {
+        changeSize(-0.1);
+    });
+
+    $("text-larger").addEventListener("click", () =>{
+        changeSize(0.1);
+    });
+
+    //load sidebar and selected chapter once explore page is opened
+    loadChapters();
+    loadChapter();
 }
     
