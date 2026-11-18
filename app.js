@@ -288,7 +288,109 @@ function startDiscover() {
         }
     }
 
+    //Connecting buttons and audio events
     
+    //-requesting another verse
+    $("next-verse").addEventListener("click", () => {
+        loadVerse(randomVerse(requested));
+    });
+
+    //-retrying the same verse after an error
+    $("retry").addEventListener("click", () => {
+        loadVerse(requested);
+    });
+
+    //-play/pause recitation
+    $("listen").addEventListener("click", async () => {
+        if (!current || busy) return;
+
+        if (!player.paused) {
+            player.pause();
+            return;
+        }
+
+        const version = ++audioVersion;
+
+        $("listen").disabled = true;
+
+        $("audio-message").textContent =
+        "Loading recitation.";
+
+        try {
+            if (!player.getAttribute("src")) {
+                const data = await request(
+                    "/ayah/" + current.number + "/ar.alafasy"
+                );
+
+                //ignore audio from an older verse
+                if (version !== audioVersion) return;
+
+                if (
+                    data.number !== current.number ||
+                    !data.audio
+                ) {
+                    throw new Error("Audio unavailable");
+                }
+
+                const url = new URL(data.audio);
+
+                if (url.protocol !== "https:") {
+                    throw new Error("Invalid audio URL");
+                }
+
+                player.src = url.href;
+            }
+
+            $("audio-area").hidden = false;
+
+            await player.play();
+
+            if (version === audioVersion) {
+                $("audio-message").textContent = "";
+            }
+        } catch {
+            if (version === audioVersion) {
+                cache.clear();
+
+                $("audio-message").textContent =
+                "Audio could not start. Try Listen again" + "or use the audio controls.";
+            }
+        } finally {
+            if (version === audioVersion) {
+                $("listen").disabled = false;
+
+                $("listen").textContent =
+                player.paused ? "Listen" : "Pause";
+            }
+        }
+    });
+
+    //updating the button when native audio controls are used.
+    ["play", "pause", "ended"].forEach((event) => {
+        player.addEventListener(event, () => {
+            $("listen").textContent =
+            player.paused ? "Listen" : "Pause";
+        });
+    });
+
+    //allowing for retry on a failed audio file
+    player.addEventListener("error", () => {
+        if (!player.getAttribute("src")) return;
+
+        audioVersion++;
+        cache.clear();
+
+        player.removeAttribute("src");
+
+        $("listen").disabled = !current || busy;
+        $("listen").textContent = "Retry audio";
+
+        $("audio-message").textContent =
+        "The recitation could not be played. Try again.";
+    });
+
+    //load 1st verse when discovery page opens
+    loadVerse(requested);
 }
 
 
