@@ -90,6 +90,33 @@
         }
          return { arabic, english};
     }
+
+    //Matching verse to respective translation
+
+    function matchVerse(arabic, english) {
+        if (
+            !arabic || !english ||
+            !validNumber(arabic.number, 6236, 0) ||
+            !validNumber(arabic.numberInSurah, 286, 0) ||
+            arabic.number !== english.number ||
+            arabic.numberInSurah !== english.numberInSurah ||
+            typeof arabic.text !== "string" ||
+            !arabic.text.trim() ||
+            typeof english.text !== "string" ||
+            !english.text.trim()
+        ) {
+            throw new Error("Incomplete or mismatched verse");
+        }
+
+        return {
+            number: arabic.number,
+            local: arabic.numberInSurah,
+            arabic: arabic.text,
+            english: english.text
+        };
+    }
+
+    
 }
 )
 
