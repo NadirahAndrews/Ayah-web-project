@@ -185,4 +185,47 @@
 
 /*DISCOVER PAGE*/
 
+//Audio player preparation
+
+function startDiscover() {
+    let current = null;
+    let busy = false;
+    let audioVersion = 0;
+
+    const player = $("recitation");
+
+    //select different verse from previous one
+
+    function randomVerse(previous) {
+        let number;
+
+        do {
+            number = Math.floor(Math.random() * 6236) + 1;
+        } while (number === previous);
+
+        return number;
+    }
+
+    let requested = validNumber(
+        params.get("ayah"),
+        6236,
+        randomVerse()
+    );
+
+    //clear prev audio when a new verse is displayed
+
+    function resetAudio() {
+        audioVersion++;
+
+        player.pause();
+        player.removeAttribute("src");
+        player.load();
+
+        $("audio-area").hidden = true;
+        $("audio-message").textContent = "";
+        $("listen").textContent = "Listen";
+        $("listen").disabled = true;
+    }
+}
+
 /*EXPLORE PAGE*/
