@@ -196,6 +196,28 @@ input {
     overflow-y: auto;
 }
 
+.chapter-option {
+    display: block;
+    width: 100%;
+    padding: 14px 10px;
+    border: 0;
+    border-bottom: 1px solid var(--lime-green);
+    background: transparent;
+    color: var(--emerald-green);
+    text-align: left;
+    cursor: pointer;
+}
+
+.chapter-option small {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+.chapter-option[aria-pressed="true"] {
+    background: var(--pastel-green);
+}
+
 /*TOOLBAR AND TEXT CONTROLS*/
 
 .chapter-toolbar {

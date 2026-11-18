@@ -440,4 +440,58 @@ function startExplore() {
             );
         });
     }
+
+    //Filter chapter buttons
+    function renderChapters() {
+        const query = normalise(
+            $("chapter-search").value
+        );
+
+        const matches = chapters.filter((item) =>
+            normalise(
+                item.number + " " +
+                item.englishName + " " +
+                item.englishNameTranslation + " " +
+                item.name
+            ).includes(query)
+        );
+
+        $("chapter-list").replaceChildren();
+
+        $("chapter-status").textContent = matches.length 
+        ? matches.length + "chapters found"
+        : "No matching chapters, try another name or number.";
+
+        matches.forEach((item) => {
+            const button = document.createElement("button");
+
+            button.type = "button";
+            button.className = "chapter-option";
+            button.value = item.number;
+
+            const name = document.createElement("span");
+
+            name.textContent =
+            item.number + ". " + item.englishName;
+
+            const meaning = document.createElement("small");
+
+            meaning.textContent =
+            item.englishNameTranslation;
+
+            button.append(name, meaning);
+
+            button.addEventListener("click", () => {
+                chosen = item.number;
+                selected = 1;
+
+                markChapter();
+                loadChapter();
+            });
+
+            $("chapter-list").append(button);
+        });
+
+        markChapter();
+    }
 }
