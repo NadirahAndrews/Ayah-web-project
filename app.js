@@ -210,6 +210,45 @@ function animateEntrance() {
     );
 }
 
+//Home page scroll trigger
+
+function animateSections() {
+    if (!window.ScrollTrigger) return;
+
+    const sections = document.querySelectorAll(
+        "[data-reveal]"
+    );
+
+    sections.forEach((section) => {
+        window.ScrollTrigger.create({
+            trigger: section,
+            start: "top 90%",
+            once: true,
+
+            onEnter: () => {
+                //focused-content steady for keyboard users.
+                if (section.contains(document.activeElement)) {
+                    return;
+                }
+
+                window.gsap.fromTo(
+                    section,
+                    {
+                        opacity: 0.35,
+                        y: 24
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.7,
+                        ease: "power2.out",
+                        clearProps: "opacity,transform"
+                    }
+                );
+            }
+        });
+    });
+}
 /*DISCOVER PAGE*/
 
 //Audio player preparation
