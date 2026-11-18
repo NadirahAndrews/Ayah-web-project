@@ -397,3 +397,47 @@ function startDiscover() {
 
 
 /*EXPLORE PAGE*/
+
+function startExplore() {
+    let chapters = [];
+    let chapter = null;
+
+    let chosen = validNumber(
+        params.get("surah"),
+        114,
+        1
+    );
+    
+    let selected = validNumber(
+        params.get("ayah"),
+        286,
+        1
+    );
+
+    let offset = 0;
+    let requestVersion = 0;
+    let scale = 1;
+
+    const pageSize = 10;
+
+    //ignore punctuation, spaces and capitalisation
+
+    function normalise(value) {
+        return String(value)
+        .toLowerCase
+        .replace(/[^\p{L}\p{N}]/gu, "");
+    }
+
+    //mark selected chapter button
+
+    function markChapter() {
+        $("chapter-list")
+        .querySelectorAll("button")
+        .forEach((button) => {
+            button.setAttribute(
+                "aria-pressed",
+                String(Number(button.value) === chosen)
+            );
+        });
+    }
+}
