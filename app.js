@@ -534,5 +534,82 @@ function startExplore() {
 
             $("retry-chapters").hidden = false;
         }
+
+        //Verse list
+        function renderVerses() {
+            $("verse-list").replaceChildren();
+            $("verse-list").start = offset + 1;
+
+            const visibleVerses = chapter.verses.slice(
+                offset,
+                offset + pageSize
+            );
+
+            visibleVerses.forEach((verse) => {
+                const item = document.createElement("li");
+
+                item.className = "chapter-verse";
+                item.id = "verse-" + verse.local;
+
+                if (verse.local === selected) {
+                    item.classList.add("selected");
+                }
+
+                const header = document.createElement("div");
+                header.className = "chapter-verse-header";
+
+                const reference = document.createElement("span");
+
+                reference.textContent =
+                chapter.number + ":" + verse.local;
+
+                const link = document.createElement("a");
+
+                link.href =
+                "discover.html?ayah=" + verse.number;
+
+                link.textContent = "Read and listen";
+
+                link.setAttribute(
+                    "aria-label",
+                    "Read and listen to verse " + 
+                    reference.textContent
+                );
+
+                header.append(reference, link);
+
+                const arabic = document.createElement("p");
+
+                arabic.className = "arabic";
+                arabic.lang = "ar";
+                arabic.dir = "rtl";
+                arabic.textContent = verse.arabic;
+
+                const translation = document.createElement("p");
+
+                translation.className = "translation";
+                translation.textContent = verse.english;
+
+                item.append(header, arabic, translation);
+
+                $("verse-list").append(item);
+            });
+
+            $("reading-range").textContent =
+            "Verses " + (offset + 1) + "-" +
+            Math.min(
+                offset + pageSize,
+                chapter.verses.length
+            ) +
+            " of " + chapter.verses.length;
+
+            $("previous-verses").disabled =
+            offset === 0;
+
+            $("next-verses").disabled =
+            offset + pageSize >= chapter.verses.length;
+        }
+
+        
     }
 }
