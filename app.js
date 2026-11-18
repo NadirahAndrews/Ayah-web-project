@@ -121,8 +121,8 @@
     function showState(kind) {
         const success = kind === "success";
 
-        $("api-sate").hidden = success;
-        $("api-sate").dataset.state = kind;
+        $("api-state").hidden = success;
+        $("api-state").dataset.state = kind;
 
         const resultID = page === "discover"
         ? "verse-result"
