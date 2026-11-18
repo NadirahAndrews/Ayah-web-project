@@ -30,7 +30,7 @@
 
     async function request(path) {
         //Reuse response thats already been called
-        If (cache.has(path)); return cache.get(path);
+        if (cache.has(path)) return cache.get(path);
 
         const controller =new AbortController();
 
