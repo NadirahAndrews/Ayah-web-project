@@ -21,6 +21,12 @@
     font-display: swap;
 }
 
+/*button feedback*/
+@media (hover: hover) {
+    .button:not(:disabled):hover {
+        transform: translateY(-2px);
+    }
+}
 /*colour pallete and design values*/
 :root {
     --cream: #f2efe2;
@@ -367,6 +373,7 @@ input {
     border: 1px solid var(--emerald-green);
     background: var(--emerald-green);
     color: var(--cream);
+    transition: transform 0.2s ease;
 }
 
 .button.secondary {

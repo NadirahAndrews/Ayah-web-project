@@ -21,6 +21,13 @@
     font-display: swap;
 }
 
+/*button feedback*/
+@media (hover: hover) {
+    .button:not(:disabled):hover {
+        transform: translateY(-2px);
+    }
+}
+
 /*colour pallete and design values*/
 :root {
     --cream: #f2efe2;
@@ -190,6 +197,7 @@ button:focus-visible {
     background: var(--emerald-green);
     color: var(--cream);
     text-decoration: none;
+    transition: transform 0.2s ease;
 }
 
 .scroll-link {

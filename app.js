@@ -201,13 +201,13 @@ function animateEntrance() {
         elements,
         {
             opacity: 0,
-            y: 18
+            y: 32
         },
         {
             opacity: 1,
             y: 0,
             duration: 0.7,
-            stagger: 0.12,
+            stagger: 0.14,
             ease: "power2.out",
             clearProps: "opacity, transform"
         }
@@ -226,7 +226,7 @@ function animateSections() {
     sections.forEach((section) => {
         window.ScrollTrigger.create({
             trigger: section,
-            start: "top 90%",
+            start: "top 75%",
             once: true,
 
             onEnter: () => {
@@ -983,6 +983,12 @@ function startExplore() {
 }
 
 /* START CORRECT PAGE */
+
+try {
+    startMotion();
+} catch (error) {
+    console.warn("Animations unavailable.", error);
+}
 
 if (page === "discover") {
     startDiscover();
