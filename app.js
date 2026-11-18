@@ -226,6 +226,72 @@ function startDiscover() {
         $("listen").textContent = "Listen";
         $("listen").disabled = true;
     }
+
+    //Load and display a verse
+
+    async function loadVerse(number) {
+        if (busy) return;
+
+        busy = true;
+        requested = number;
+        current = null;
+
+        resetAudio();
+
+        $("next-verse").disabled = true;
+        showState("loading");
+
+        try {
+            const { arabic, english} = await editions(
+                "/ayah/" + number 
+            );
+
+            const verse = matchVerse(arabic, english);
+
+            if (
+                verse.number !== number ||
+                !validNumber(arabic.surah?.number, 114, 0) ||
+                arabic.surah.number !== english.surah?.number ||
+                !arabic.surah.englishName
+            ) {
+                throw new Error("Invalid verse reference");
+            }
+
+            current = verse;
+
+            $("verse-ref").textContent =
+            "SURAH" + arabic.surah.number + " / VERSE" + verse.local;
+
+            $("verse-surah").textContent =
+            arabic.surah.englishName;
+
+            $("verse-arabic").textContent =
+            verse.arabic;
+
+            $("verse-translation").textContent =
+            verse.english;
+
+            $("explore-link").href =
+            "explore.html?surah=" + arabic.surah.number + "&ayah" + verse.local;
+
+            updateURL({ ayah: number });
+
+            showState("success");
+            $("listen").disabled = false;
+
+        } catch (error) {
+            cache.clear();
+            showError(error);
+        } finally {
+            busy = false;
+            $("next-verse").disabled = false;
+        }
+    }
+
+    
 }
+
+
+
 
 /*EXPLORE PAGE*/
