@@ -146,7 +146,7 @@
                 "Retrieving Arabic and English text."
             ],
             empty: [
-                "No test was returned.",
+                "No text was returned.",
                 "Please try again"
             ],
             error: [
@@ -162,7 +162,16 @@
 
         if (success) {
             animateReading($(resultID));
+            
+            if (page === "explore") {
+                animateSections();
+            }
+
+            if (window.ScrollTrigger) {
+                window.ScrollTrigger.refresh();
+            }
         }
+        
     }
 
     function showError(error) {
@@ -195,19 +204,21 @@ function animateEntrance() {
         "[data-intro]"
     );
 
-    if (!elements.length) return;
+    if (!elements.length || !window.gsap) return;
+
+    const isHome = page === "home";
 
     window.gsap.fromTo(
         elements,
         {
-            opacity: 0,
-            y: 32
+            opacity: isHome ? 0 : 0.35,
+            y: isHome ? 32 : 12
         },
         {
             opacity: 1,
             y: 0,
-            duration: 0.7,
-            stagger: 0.14,
+            duration: isHome ? 0.7 : 0.55,
+            stagger: isHome ? 0.14 : 0.08,
             ease: "power2.out",
             clearProps: "opacity,transform"
         }
@@ -219,11 +230,20 @@ function animateEntrance() {
 function animateSections() {
     if (!window.gsap || !window.ScrollTrigger) return;
 
+    if (page === "explore" && $("chapter-result").hidden) {
+        return;
+    }
+
     const sections = document.querySelectorAll(
         "[data-reveal]"
     );
 
     sections.forEach((section) => {
+
+        if (section.dataset.revealReady === "true") return;
+        section. dataset.revealReady = "true";
+        const revealOnce = page !== "home";
+
         function reveal(direction) {
 
             if (section.contains(document.activeElement)) {
@@ -236,12 +256,12 @@ function animateSections() {
                 section,
                 {
                     opacity: 0.25,
-                    y: direction * 55
+                    y: direction * (revealOnce ? 16 : 55)
                 },
                 {
                     opacity: 1,
                     y: 0,
-                    duration: 0.85,
+                    duration: revealOnce ? 0.5 : 0.85,
                     ease: "power3.out",
                     clearProps: "opacity,transform"
                 }
@@ -253,12 +273,16 @@ function animateSections() {
             start: "top 90%",
             end: "bottom 10%",
 
+            once: revealOnce,
+
             onEnter: () => {
                 reveal(1);
             },
 
             onEnterBack: () => {
-                reveal(-1);
+                if (!revealOnce) {
+                    reveal(-1);
+                }
             }
         });
     });
@@ -308,7 +332,7 @@ function animateTerminology() {
 
                             scrollTrigger: {
                                 trigger: card,
-                                start: "top 90%",
+                                start: "top 75%",
                                 end: "bottom 10%",
                                 toggleActions: 
                                 "play reverse play reverse"
@@ -928,6 +952,10 @@ function startExplore() {
         
         if (!$("chapter-result").hidden) {
             animateReading($("verse-list"));
+
+            if (window.ScrollTrigger) {
+                window.ScrollTrigger.refresh();
+            }
         }    
     }
 
