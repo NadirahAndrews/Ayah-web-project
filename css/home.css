@@ -337,3 +337,67 @@ button:focus-visible {
         padding: 56px 6%;
     }
 }
+
+/*TERMINOLOGY LAYOUT*/
+.term-stage {
+    position: relative;
+}
+
+.term-stage .term-panel {
+    display: grid;
+    grid-template-columns: 
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+    align-items: center;
+    gap: 48px;
+    margin: 0 0 24px;
+    padding: 56px 6%;
+    border-radius: 24px;
+}
+
+.term-stage .term-copy {
+    width: 100%;
+    max-width: 500px;
+    min-width: 0;
+}
+
+.term-copy h3 {
+    font-size: clamp(42px, 5vw, 76px);
+}
+
+.term-copy > p:last-child {
+    font-size: clamp(16px, 1.4vw, 20px);
+    line-height: 1.75;
+}
+
+.term-stage.is-stacked {
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.term-stage.is-stacked .term-panel {
+    position: absolute;
+    inset: 24px 0;
+    margin: 0;
+    padding: clamp(32px, 5vw, 80px);
+    box-shadow: 0 18px 50px rgba(45, 53, 54, 0.16);
+}
+
+.term-stage.is-stacked .term-arabic {
+    font-size: clamp(130px, 17vw, 260px);
+    line-height: 1.4;
+}
+
+@media (max-width: 799px) {
+    .term-stage .term-panel {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+        padding: 36px 7%;
+    }
+
+    .term-stage .term-arabic {
+        font-size: clamp(90px, 22vw, 150px);
+    }
+}

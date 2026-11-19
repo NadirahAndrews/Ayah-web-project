@@ -209,7 +209,7 @@ function animateEntrance() {
             duration: 0.7,
             stagger: 0.14,
             ease: "power2.out",
-            clearProps: "opacity, transform"
+            clearProps: "opacity,transform"
         }
     );
 }
@@ -217,41 +217,230 @@ function animateEntrance() {
 //Home page scroll trigger
 
 function animateSections() {
-    if (!window.ScrollTrigger) return;
+    if (!window.gsap || !window.ScrollTrigger) return;
 
     const sections = document.querySelectorAll(
         "[data-reveal]"
     );
 
     sections.forEach((section) => {
+        function reveal(direction) {
+
+            if (section.contains(document.activeElement)) {
+                return;
+            }
+
+            window.gsap.killTweensOf(section);
+
+            window.gsap.fromTo(
+                section,
+                {
+                    opacity: 0.25,
+                    y: direction * 55
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.85,
+                    ease: "power3.out",
+                    clearProps: "opacity,transform"
+                }
+            );
+        }
+
         window.ScrollTrigger.create({
             trigger: section,
-            start: "top 75%",
-            once: true,
+            start: "top 90%",
+            end: "bottom 10%",
 
             onEnter: () => {
-                //focused-content steady for keyboard users.
-                if (section.contains(document.activeElement)) {
-                    return;
-                }
+                reveal(1);
+            },
 
-                window.gsap.fromTo(
-                    section,
-                    {
-                        opacity: 0.35,
-                        y: 24
-                    },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.7,
-                        ease: "power2.out",
-                        clearProps: "opacity,transform"
-                    }
-                );
+            onEnterBack: () => {
+                reveal(-1);
             }
         });
     });
+}
+
+function animateTerminology() {
+    if (!window.gsap || !window.ScrollTrigger) return;
+
+    const stage = document.querySelector(".term-stage");
+
+    if (!stage) return;
+
+    const cards = Array.from(
+        stage.querySelectorAll(".term-panel")
+    );
+
+    if (!cards.length) return;
+
+    const gsap = window.gsap;
+    const media = gsap.matchMedia();
+
+    media.add(
+        {
+            large:
+            "(min-width: 800px) and (min-height: 650px)",
+            small: 
+            "(max-width: 799px), (max-height: 649px)"
+        },
+
+        (context) => {
+            //smaller screens - vertical cards.
+            if (!context.conditions.large) {
+                cards.forEach((card) => {
+                    gsap.fromTo(
+                        card,
+                        {
+                            opacity: 0.3,
+                            y: 60,
+                            scale: 0.96
+                        },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.8,
+                            ease: "power3.out",
+
+                            scrollTrigger: {
+                                trigger: card,
+                                start: "top 90%",
+                                end: "bottom 10%",
+                                toggleActions: 
+                                "play reverse play reverse"
+                            }
+                        }
+                    );
+                });
+
+                return;
+            }
+
+            //Larger screens overlap
+            stage.classList.add("is-stacked");
+
+            cards.forEach((card, index) => {
+                gsap.set(card, {
+                    zIndex: index + 1,
+                    xPercent: index === 0 ? 0 : 110,
+                    rotation: index === 0 ? 0 : 7,
+                    scale: 1,
+                    yPercent: 0,
+                    opacity: 1,
+                    transformOrigin: "50% 100%"
+                });
+
+                gsap.set(
+                    card.querySelector(".term-copy"),
+                    {
+                        x: 45,
+                        opacity: 0,
+                        clipPath: "inset(0% 100% 0% 0%)"
+                    }
+                );
+            });
+
+            const timeline = gsap.timeline({
+                defaults: {
+                    ease: "none"
+                },
+
+                scrollTrigger: {
+                    trigger: stage,
+                    start: "top top",
+
+                    end: () =>
+                        "+=" + (
+                            window.innerHeight *
+                            cards.length *
+                            1.4
+                        ),
+
+                        pin: true,
+                        pinSpacing: true,
+                        scrub: 0.65,
+                        anticipatePin: 1,
+                        invalidateOnRefresh: true
+                }
+            });
+
+            cards.forEach((card, index) => {
+                const copy = card.querySelector(".term-copy");
+
+                if (index > 0) {
+                    const previous = cards[index - 1];
+                    const slotLabel = "slot-" + index;
+
+                    timeline.addLabel(slotLabel);
+
+                    //push prev card back 
+                    timeline.to(
+                        previous,
+                        {
+                            scale: 0.91,
+                            yPercent: -4,
+                            opacity: 0.35,
+                            duration: 1
+                        },
+                        slotLabel
+                    );
+
+                    //slide next card forward
+                    timeline.to(
+                        card,
+                        {
+                            xPercent: 0,
+                            rotation: 0,
+                            duration: 1,
+                            ease: "power2.out"
+                        },
+                        slotLabel
+                    );
+                }
+
+                const textLabel = "text-" + index;
+
+                timeline.addLabel(textLabel);
+
+                //Slide the English text into position.
+                timeline.to(
+                    copy,
+                    {
+                        x: 0,
+                        opacity: 1,
+                        duration: 0.35
+                    },
+                    textLabel
+                );
+
+                //Reveal text like typewriter
+                timeline.to(
+                    copy,
+                    {
+                        clipPath: "inset(0% 0% 0% 0%)",
+                        duration: 0.9,
+                        ease: "steps(24)"
+                    },
+                    textLabel
+                );
+
+                //scrolling distance for reading
+                timeline.to(card, {
+                    xPercent: 0,
+                    duration: 0.55
+                });
+            });
+
+            //return to normal layout on smaller
+            return () => {
+                stage.classList.remove("is-stacked");
+            };
+        }
+    );
 }
 
 //Animate reading content display
@@ -276,7 +465,7 @@ function animateReading(element) {
             y: 0,
             duration: 0.35,
             ease: "power2.out",
-            clearProps: "opacity, transform"
+            clearProps: "opacity,transform"
         }
     );
 }
@@ -294,7 +483,13 @@ function startMotion() {
     }
 
     animateEntrance();
+    animateTerminology();
     animateSections();
+
+    if (window.ScrollTrigger) {
+        window.ScrollTrigger.sort();
+        window.ScrollTrigger.refresh();
+    }
 
     //Recalculate scroll positions after the fonts load.
     if (document.fonts && window.ScrollTrigger) {
