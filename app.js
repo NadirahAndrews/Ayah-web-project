@@ -481,13 +481,13 @@ function animateReading(element) {
     window.gsap.fromTo(
         element,
         {
-            opacity: 0.35,
+            opacity: page === "discover" ? 0 : 0.35,
             y: 8
         },
         {
             opacity: 1,
             y: 0,
-            duration: 0.35,
+            duration: page === "discover" ? 0.6 : 0.35,
             ease: "power2.out",
             clearProps: "opacity,transform"
         }
@@ -954,7 +954,7 @@ function startExplore() {
             animateReading($("verse-list"));
 
             if (window.ScrollTrigger) {
-                window.ScrollTrigger.refresh();
+                window.ScrollTrigger.refresh
             }
         }    
     }
