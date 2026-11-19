@@ -481,13 +481,13 @@ function animateReading(element) {
     window.gsap.fromTo(
         element,
         {
-            opacity: page === "discover" ? 0 : 0.35,
-            y: 8
+            opacity: page === "discover" ? 0.6 : 0.45,
+            y: 40
         },
         {
             opacity: 1,
             y: 0,
-            duration: page === "discover" ? 0.6 : 0.35,
+            duration: page === "discover" ? 0.6 : 0.45,
             ease: "power2.out",
             clearProps: "opacity,transform"
         }
